@@ -28,3 +28,17 @@ class Salary(models.Model):
 
     def __str__(self):
         return self.slipno
+
+class Deduction(models.Model):
+    dedid = models.CharField(max_length=10, primary_key=True)
+    eid = models.ForeignKey(User, on_delete=models.CASCADE)
+    ded_date = models.DateField()
+    deduction_types = (
+        ('P', 'Pension'),
+        ('L', 'Loans'),
+    )
+    dcategory = models.CharField(max_length=1, choices=deduction_types)
+    damt = models.FloatField()
+
+    def __str__(self):
+        return self.dedid
