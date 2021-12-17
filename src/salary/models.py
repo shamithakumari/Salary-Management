@@ -1,22 +1,22 @@
 from django.db import models
 from django.db.models.fields import DateField
 from django.db.models.fields.related import ForeignKey
-from authenticate.models import Employee
+from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
 
 # Create your models here.
-class Department:
+class Department(models.Model):
     dno = models.IntegerField(primary_key=True)
     dname = models.CharField(max_length=20)
-    mgrid = models.CharField(max_length=10)
+    mgrid = models.ForeignKey(User,on_delete=CASCADE)
     dept_date = models.DateField()
     
     def __str__(self):
         return self.dname
 
-class Salary:
+class Salary(models.Model):
     slipno = models.CharField(max_length=10, primary_key=True)
-    eid = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    eid = models.ForeignKey(User, on_delete=models.CASCADE)
     dno = models.ForeignKey(Department, on_delete=CASCADE)
     basic_salary = models.FloatField()
     hra = models.FloatField()
