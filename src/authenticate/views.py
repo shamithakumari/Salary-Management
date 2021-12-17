@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users, accountant_only
 from .models import Employee
 # Create your views here.
+
 @unauthenticated_user
 def home(request):
     return render(request, "authenticate/home.html", {})
@@ -53,9 +54,11 @@ def signup(request):
         # myuser.is_active = False
         # myuser.is_active = False
         emp = Employee(myuser)
+        emp.userid=eid
         emp.address = address
         emp.phoneno = phone
         myuser.save()
+        emp.save()
         messages.success(request, "Your Account has been created succesfully!!")
 
         return redirect('signin')
@@ -66,8 +69,8 @@ def signin(request):
     if request.method == 'POST':
         eid = request.POST.get('eid')
         pass1 = request.POST.get('pass')
-        password = make_password('pass1')
-        user = authenticate( username=eid, password=password)
+        # password = make_password('pass1')
+        user = authenticate( username=eid, password=pass1)
         # print('User request')
         
         if user is not None:
