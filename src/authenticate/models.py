@@ -4,6 +4,7 @@ from django.db.models.deletion import CASCADE
 # Create your models here.
 
 class Employee(models.Model):
+    userid = models.IntegerField(primary_key=True)
     user = models.OneToOneField(User, null=True, on_delete=CASCADE)
     address = models.TextField()
     phoneno = models.CharField(max_length=12)
@@ -15,7 +16,7 @@ class Employee(models.Model):
 
 
 class Accountant(models.Model):
-    aid = models.ForeignKey(User, on_delete=models.CASCADE)
+    aid = models.OneToOneField(Employee, on_delete=models.CASCADE,primary_key=True)
     username = models.CharField(max_length=50)
     role = models.CharField(max_length=50)
     # password = models.CharField(max_length=50)
