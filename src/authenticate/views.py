@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users, accountant_only
 from .models import Employee
+from salary.views import details
 # Create your views here.
 
 @unauthenticated_user
@@ -80,7 +81,7 @@ def signin(request):
             # lname = user.last_name
             #messages.success(request, "Logged In Sucessfully!!")
             # return render(request, "authenticate/index.html",{"fname":fname})
-            return redirect('index')
+            return redirect('details')
         else:
             messages.error(request, "Invalid login")
             return render(request, "authenticate/signin.html", {})
