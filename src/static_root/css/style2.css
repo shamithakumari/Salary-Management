@@ -1,0 +1,35 @@
+* {
+    padding: 0;
+    margin-bottom: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: whitesmoke;
+}
+
+.cont {
+    margin-top: 80px;
+    background-color: white;
+    padding: 20px;
+}
+.both
+{
+    display: flex;
+    justify-content: space-around;
+}
+.sal2
+{
+    /* font-size: 30px; */
+    display: flex;
+    flex-direction: column;
+}
+.det {
+    display: flex;
+    flex-direction: column;
+}
+.sal h1{
+    margin: 20px;
+}
+.ded h1{
+    margin: 20px;
+}
