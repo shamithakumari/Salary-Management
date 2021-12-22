@@ -1,3 +1,4 @@
+
 # don't add migrations at any cost!!
 #Reason: refer to https://stackoverflow.com/questions/28035119/should-i-be-adding-the-django-migration-files-in-the-gitignore-file
 
@@ -148,3 +149,4 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+

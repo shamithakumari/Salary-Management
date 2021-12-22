@@ -18,6 +18,7 @@ class Salary(models.Model):
     slipno = models.CharField(max_length=10, primary_key=True)
     eid = models.ForeignKey(User, on_delete=models.CASCADE)
     # dno = models.ForeignKey(Department, on_delete=CASCADE)
+    
     basic_salary = models.FloatField()
     hra = models.FloatField()
     conveyance_allowance = models.FloatField()

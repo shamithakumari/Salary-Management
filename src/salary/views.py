@@ -14,7 +14,7 @@ def details(request):
     salary_list = Salary.objects.filter(eid=request.user.id)
     deduction_list = Deduction.objects.filter(eid=request.user.id)
     emp_details = User.objects.filter(id=request.user.id)
-    emp_details_2 = Employee.objects.get(user=request.user.id)
+    emp_details_2 = Employee.objects.get(user=request.user)
 
     return render(request, "salary/salary_details.html", 
     {
