@@ -17,14 +17,14 @@ class Department(models.Model):
 class Salary(models.Model):
     slipno = models.CharField(max_length=10, primary_key=True)
     eid = models.ForeignKey(User, on_delete=models.CASCADE)
-    dno = models.ForeignKey(Department, on_delete=CASCADE)
+    # dno = models.ForeignKey(Department, on_delete=CASCADE)
     basic_salary = models.FloatField()
     hra = models.FloatField()
     conveyance_allowance = models.FloatField()
     medical_allowance = models.FloatField()
     performance_bonus = models.FloatField()
     others = models.FloatField()
-    sdate = models.DateField()
+    sdate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.slipno
@@ -32,12 +32,8 @@ class Salary(models.Model):
 class Deduction(models.Model):
     dedid = models.CharField(max_length=10, primary_key=True)
     eid = models.ForeignKey(User, on_delete=models.CASCADE)
-    ded_date = models.DateField()
-    deduction_types = (
-        ('P', 'Pension'),
-        ('L', 'Loans'),
-    )
-    dcategory = models.CharField(max_length=1, choices=deduction_types)
+    slipno = models.ForeignKey(Salary, on_delete=models.CASCADE) 
+    dcategory = models.CharField(max_length=30)
     damt = models.FloatField()
 
     def __str__(self):
