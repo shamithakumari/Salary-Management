@@ -1,0 +1,39 @@
+
+.active{
+    background-color: black !important;
+}
+
+.container.mt-0 {
+  margin-top: calc(100vh / 7) !important;
+}
+
+.col-4{
+    position: fixed;
+    height: 80vh!important;
+    overflow-y: scroll;
+}
+
+.col-4.ms-0 {
+  margin-left: -50px !important;
+}
+
+.col-8 {
+    width: 67.666667%!important;
+}
+
+.col-8.ms-0{
+    margin-left:31vw !important;
+}
+
+.col-8.mb-0{
+    margin-bottom:calc(100vh / 7) !important ;
+}
+
+h2.mb-0{
+    margin-bottom: 30px !important;
+}
+
+.submission-info.mb-0.ma-0{
+    margin-bottom: 30px !important;
+    margin-top:30px !important;
+}

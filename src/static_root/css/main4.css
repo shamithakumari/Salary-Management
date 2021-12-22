@@ -222,7 +222,6 @@ tbody tr:hover {
 }
 
 
-
  @media screen and (max-width: 992px) {
   table {
     display: block;
@@ -261,7 +260,6 @@ tbody tr:hover {
   table tbody tr td:nth-child(2):before {
     content: "Description";
   }
-
   table tbody tr td:nth-child(3):before {
     content: "Name";
   }
@@ -273,7 +271,6 @@ tbody tr:hover {
   }
   table tbody tr td:nth-child(6):before {
     content: "Total";
-
   }
 
   .column4,
@@ -302,4 +299,3 @@ tbody tr:hover {
     padding-right: 15px;
   }
 } 
-
