@@ -229,7 +229,7 @@
     border-bottom: 2px solid rgb(140, 140, 216);
   }
   .heading {
-    width: 105%;
+    width: 100vw;
     text-transform: uppercase;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 35px;
@@ -265,6 +265,7 @@
   @media screen and (max-width: 992px) {
     .heading{
       font-size: 25px;
+      width: 100%;
     }
     .row{
       display: flex;
@@ -288,7 +289,7 @@
         width: 100vw;
     }
     table tr {
-        width: 85%;
+        width: 100vw;
         display: flex;
         flex-direction: row;
     }
