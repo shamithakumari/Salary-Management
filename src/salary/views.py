@@ -55,8 +55,10 @@ def accountantind(request,userid):
             for i in range(numDeductions):
                 print(f'ded1{i+1}')
                 deductionForm=DeductionForm()
-                deductionForm.damt=request.POST.get(f'damt{i+1}')
-                deductionForm.dcategory=request.POST.get(f'dcategory{i+1}')
+                damt=request.POST.get(f'damt{i+1}')
+                deductionForm.damt=damt
+                dcategory=request.POST.get(f'dcategory{i+1}')
+                deductionForm.dcategory=dcategory
                 print(request.POST.get(f'damt{i+1}'))
                 print(request.POST.get(f'dcategory{i+1}'))
                 if valid and deductionForm.is_valid():
@@ -68,6 +70,7 @@ def accountantind(request,userid):
                     totded+=deductionobj.damt
                 else:
                     context['errors'].append(deductionForm.errors)
+                    context['errors'].append(deductionForm.non_field_errors)
                     valid=False
             totsal=salaryobj.basic_salary+salaryobj.hra+salaryobj.conveyance_allowance+salaryobj.medical_allowance+salaryobj.performance_bonus+salaryobj.others
             context['totsal']=totsal
