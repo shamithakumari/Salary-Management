@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.http.response import HttpResponse
+from django.shortcuts import render,redirect
 
 from authenticate.models import Employee
-import salary
+# import salary
 from .models import Salary,Department, Deduction
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import *
 
@@ -95,3 +97,23 @@ def accountantind(request,userid):
     context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
     context['employeeind']= Employee.objects.get(userid=userid)
     return render(request, 'salary/accountants.html',context)
+
+
+@csrf_exempt
+def salaryupdate(request,slipno):
+    if(request.method == 'POST'):
+        # salary = Salary.objects.get(pk=slipno)
+        # salary.basic_salary = request.POST.get('basic_salary')
+        # salary.hra = request.POST.get('hra')
+        # salary.medical_allowance = request.POST.get('medical_allowance')
+        # salary.performance_bonus = request.POST.get('performance_bonus')
+        # salary.others = request.POST.get('others')
+        # salary.save()
+        Salary.objects.filter(pk=slipno).update(basic_salary = request.POST['basic_salary'],
+        hra=request.POST['hra'],
+        conveyance_allowance=request.POST['conveyance_allowance'],
+        medical_allowance=request.POST['medical_allowance'],
+        performance_bonus=request.POST['performance_bonus'],
+        others=request.POST['others'])
+        
+        return HttpResponse("Salary successfully updated")
