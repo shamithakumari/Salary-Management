@@ -1,0 +1,12 @@
+
+.card{
+    margin-top: 20px;
+}
+
+.card-text{
+    margin-bottom: 1rem;
+}
+
+.card-text p{
+    margin-bottom: 2px!important;
+}

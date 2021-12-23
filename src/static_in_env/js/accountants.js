@@ -15,6 +15,7 @@ gobutton.addEventListener("click",()=>{
     removeChildrenDeduction();
     for(let i=0;i<value;i++){ 
         let deductionclone=deduction.cloneNode(true);
+        deductionclone.classList.remove('d-none')
         deductionclone.children[0].innerHTML=`${i+1}:-`;
         deductionclone.children[1].children[1].setAttribute("name",`damt${i+1}`);
         deductionclone.children[2].children[1].setAttribute("name",`dcategory${i+1}`);

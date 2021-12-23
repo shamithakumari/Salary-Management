@@ -21,7 +21,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
@@ -81,13 +81,15 @@
                 <h1>Employee Salary details:</h1>
                 <hr>
                 <div class="col-md-12">
-                    {%if not employeeind%}
+
+                {%if not employeeind%}
                     <h4>Employee Id: <span>{{employees.0.userid}}</span></h4>
                     <h4>Employee Name: <span>{{employees.0.user.get_full_name}}</span></h4>
-                    {% else %}
+                {% else %}
                     <h4>Employee Id: <span>{{employeeind.userid}}</span></h4>
                     <h4>Employee Name: <span>{{employeeind.user.get_full_name}}</span></h4>
-                    {%endif %}
+                {%endif %}
+                
                 </div>
                 <hr>
                 <h2 class="mb-0">Salary details:</h2>
@@ -145,7 +147,7 @@
                     </div>
                     <hr>
                     <div class="deductions">
-                        <div class="deduction row g-3">
+                        <div class="deduction row g-3 d-none">
                             <h5>1:-</h5>
                             <div class="col-md-6">
                                 <label for="deductionAmt" class="form-label">Deduction Amount</label>
@@ -183,7 +185,7 @@
                         <button type="submit" class="btn btn-primary" id="salarysubmit">Submit Salary Details</button>
                     </div>
                 </form>
-                <div class="text-success d-none" id="salary-success">
+                <div class="text-success d-none" id="salary-success" style="margin-top:20px;">
                 {%if success%}
                     <script>
                         var success=document.getElementById('salary-success');
@@ -192,7 +194,7 @@
                     </script>
                 {%endif%}
                 </div>
-                <div class="text-danger d-none " id="salary-error">
+                <div class="text-danger d-none " id="salary-error" style="margin-top:20px;">
                 {%if iserror%}
                     <script>
                         console.log('{{errors}}')

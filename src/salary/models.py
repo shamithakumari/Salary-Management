@@ -22,11 +22,11 @@ class Salary(models.Model):
     # dno = models.ForeignKey(Department, on_delete=CASCADE)
     
     basic_salary = models.FloatField()
-    hra = models.FloatField()
-    conveyance_allowance = models.FloatField()
-    medical_allowance = models.FloatField()
-    performance_bonus = models.FloatField()
-    others = models.FloatField()
+    hra = models.FloatField(default=0,blank=True,null=True)
+    conveyance_allowance = models.FloatField(default=0,blank=True,null=True)
+    medical_allowance = models.FloatField(default=0,blank=True,null=True)
+    performance_bonus = models.FloatField(default=0,blank=True,null=True)
+    others = models.FloatField(default=0,blank=True,null=True)
     sdate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Deduction(models.Model):
     dedid = models.AutoField(primary_key=True)
     eid = models.ForeignKey(Employee, on_delete=models.CASCADE)
     slipno = models.ForeignKey(Salary, on_delete=models.CASCADE) 
-    dcategory = models.CharField(max_length=30,blank=False)
+    dcategory = models.CharField(max_length=30)
     damt = models.FloatField(blank=False)
 
     def __str__(self):
