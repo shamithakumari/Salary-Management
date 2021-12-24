@@ -78,10 +78,10 @@
                 </div>
                 <hr>
                 
-            {%if not slips_present %}
+            {%if not slip_present %}
                 <h2>Slips are yet to be inserted for this employee</h2>
             {%else%}
-                {%for slipdict in slips%}
+                
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Slip no: {{slipdict.slip.slipno}}</h5>
@@ -97,7 +97,7 @@
                         <a href="#" target="_blank" class="btn btn-primary">Update the Slip#{{slipdict.slip.slipno}}</a>
                     </div>
                 </div>
-                {%endfor%}
+                {% comment %} {%endfor%} {% endcomment %}
             {%endif%}
 
             </div>
