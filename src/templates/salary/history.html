@@ -96,7 +96,7 @@
                             <p>Net Salary: {{slipdict.net_salary}}</p>
                             <p>Date: {{slipdict.slip.sdate}}</p>
                         </div>
-                        <a href="#" target="_blank" class="btn btn-primary">Update the Slip#{{slipdict.slip.slipno}}</a>
+                        <a href="{% url 'salary_slip_update' slipdict.slip.slipno %}" class="btn btn-primary">Update the Slip#{{slipdict.slip.slipno}}</a>
                     </div>
                 </div>
                 {% comment %} {%endfor%} {% endcomment %}
