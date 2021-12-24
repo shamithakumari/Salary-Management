@@ -140,11 +140,16 @@
                   </tr>
                   <tr>
                     <td class="column1">Deduction category</td>
-                    {% if list.dcategory == 'L' %}
+
+                    {% comment %} Not required as category is a char field now{% endcomment %}
+
+                    {% comment %} {% if list.dcategory == 'L' %}
                     <td class="column2">Loans</td>
                     {% else %}
                     <td class="column2">Pension</td>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
+
+                    <td class="column2">{{list.dcategory}}</td>
                   </tr>
                   <tr>
                     <td class="column1">Deduction amount</td>

@@ -14,12 +14,23 @@ from .forms import *
 # Create your views here.
 @login_required(login_url='signin')
 def details(request):
-    salary_list = Salary.objects.filter(eid=request.user.id)
-    deduction_list = Deduction.objects.filter(eid=request.user.id)
+    eid=Employee.objects.filter(user=request.user).first()
+    salary_list = Salary.objects.filter(eid=eid)
+
+    # for slip in salary_list:
+    #     deduction_list.append(Deduction.objects.filter(slipno=slip))
     emp_details = User.objects.filter(id=request.user.id)
     emp_details_2 = Employee.objects.get(user=request.user)
 
     salary_list = salary_list.order_by('-sdate').first()
+
+    # salary_list is actually a salary slip
+    # loop for deductions for that particular salary slip
+    # filter returns a list 
+    # deduction_list is queryset of deductions on that salary slip
+
+    if salary_list:
+        deduction_list=Deduction.objects.filter(slipno=salary_list)
 
     total_salary=0
     total_deductions=0
@@ -27,7 +38,8 @@ def details(request):
 
     if salary_list:
         total_salary = salary_list.basic_salary + salary_list.hra + salary_list.conveyance_allowance + salary_list.medical_allowance + salary_list.performance_bonus + salary_list.others
-        total_deductions = deduction_list[0].damt
+        for deduction in deduction_list:
+            total_deductions+=deduction.damt
         net_salary = total_salary - total_deductions
 
 
