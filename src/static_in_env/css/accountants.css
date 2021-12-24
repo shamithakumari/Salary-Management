@@ -1,5 +1,5 @@
 
-.active{
+.list-group .active{
     background-color: black !important;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .col-8.ms-0{
-    margin-left:31vw !important;
+    margin-left:30px !important;
 }
 
 .col-8.mb-0{

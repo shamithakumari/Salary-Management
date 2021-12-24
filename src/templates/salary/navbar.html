@@ -1,25 +1,24 @@
-<nav id="scanfcode" class="navbar">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" id="toogle-button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-         <span class="glyphicon glyphicon-menu-hamburger"></span>                     
-        </button>
-        <a id="logo" class="navbar-brand" href="#">Scanfcode</a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-   
-        <ul id="link" class="nav navbar-nav navbar-right">
-           <li class="dropdown" id="first-link">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">More <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Page 1-1</a></li>
-              <li><a href="#">Page 1-2</a></li>
-              <li><a href="#">Page 1-3</a></li>
-            </ul>
-          </li>
-          <li><a href='#'>Sign In</a></li>
-          <li id="button-link"><a href="#">Sign Up</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <a class="navbar-brand" style="text-transform: uppercase; font-weight: bolder; color: blue;" href="#">E-SALARY</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto" style="margin-right: 20px;">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'details' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      {% if accountant %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'accountants' %}">View</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'history' %}">History</a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'signout' %}">Signout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
