@@ -42,7 +42,7 @@
                 <div class="list-group" id="list-tab" role="tablist">
             {%if not employeeind%}
                 {% for employee in employees %}
-                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list"
+                    <a class="list-group-item list-group-item-action" id="list-home-list" data-bs-toggle="list"
                         href="#" role="tab" data-href="{% url 'history' userid=employee.userid %}"> {{employee.userid}}
                         | {{employee.user.get_full_name}}</a>
                 {%endfor%}
@@ -94,7 +94,7 @@
 
                 </div>
                 <hr>
-
+                
             {%if not slips_present %}
                 <h2>Slips are yet to be inserted for this employee</h2>
             {%else%}

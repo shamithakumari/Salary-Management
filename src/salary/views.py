@@ -120,10 +120,8 @@ def history(request):
     context['employeeind']=None
     slips=Salary.objects.filter(eid=context['employees'].first()).order_by('-sdate')
     context['slips']=[]
-    i=0
     for slip in slips:
-        context['slips'][i]=slipcalc_history(slip)
-        i=i+1
+        context['slips'].append(slipcalc_history(slip))
     if len(context['slips'])==0:
         context['slips_present']=False
     else:
@@ -139,10 +137,8 @@ def history_with_userid(request,userid):
     context['employeeind']= Employee.objects.get(userid=userid)
     slips=Salary.objects.filter(eid=context['employeeind']).order_by('-sdate')
     context['slips']=[]
-    i=0
     for slip in slips:
-        context['slips'][i]=slipcalc_history(slip)
-        i=i+1
+        context['slips'].append(slipcalc_history(slip))
     if len(context['slips'])==0:
         context['slips_present']=False
     else:
