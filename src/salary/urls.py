@@ -11,6 +11,6 @@ urlpatterns = [
     path('history/<int:userid>',views.history_with_userid, name="history"),
     # path('/history',views.history, name="history")
 
-    path('<int:slipno>',views.salaryupdate,name="salaryupdate")
+    path('history/update/<int:slipno>',views.salary_slip_update,name="salary_slip_update")
 
 ]
