@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 def unauthenticated_user(view_func):
@@ -31,10 +31,11 @@ def accountant_only(view_func):
 		if request.user.groups.exists():
 			group = request.user.groups.all()[0].name
 
-		if group == 'employee':
-			return redirect('index')
-
 		if group == 'accountant':
 			return view_func(request, *args, **kwargs)
+
+		if group == 'employee':
+			return redirect('/details')
+
 
 	return wrapper_function

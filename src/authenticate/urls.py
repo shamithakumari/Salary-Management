@@ -8,6 +8,6 @@ urlpatterns = [
     path('', views.signin, name="signin"),
     path('signin', views.signin, name="signin"),
     path('signout', views.signout, name="signout"),
-    path('index', views.index, name="index"),
-    path('a_index', views.accountant_index, name="a_index"),
+    # path('index', views.index, name="index"),
+    # path('a_index', views.accountant_index, name="a_index"),
 ]

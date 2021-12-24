@@ -20,9 +20,16 @@ def details(request):
     emp_details_2 = Employee.objects.get(user=request.user)
 
     salary_list = salary_list.order_by('-sdate').first()
-    total_salary = salary_list.basic_salary + salary_list.hra + salary_list.conveyance_allowance + salary_list.medical_allowance + salary_list.performance_bonus + salary_list.others
-    total_deductions = deduction_list[0].damt
-    net_salary = total_salary - total_deductions
+
+    total_salary=0
+    total_deductions=0
+    net_salary=0
+
+    if salary_list==None:
+        total_salary = salary_list.basic_salary + salary_list.hra + salary_list.conveyance_allowance + salary_list.medical_allowance + salary_list.performance_bonus + salary_list.others
+        total_deductions = deduction_list[0].damt
+        net_salary = total_salary - total_deductions
+
 
     return render(request, "salary/salary_details.html", 
     {
@@ -31,6 +38,7 @@ def details(request):
         'emp_details': emp_details,
         'emp_details_2': emp_details_2,
         'net_salary': net_salary,
+        'accountant': request.session.get('accountant')
     })
 
 @login_required(login_url='signin')

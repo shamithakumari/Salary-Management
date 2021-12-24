@@ -83,7 +83,8 @@ def signin(request):
             # lname = user.last_name
             #messages.success(request, "Logged In Sucessfully!!")
             # return render(request, "authenticate/index.html",{"fname":fname})
-            return redirect('details')
+            # return redirect('details')
+            return accountant_index(request)
         else:
             messages.error(request, "Invalid login")
             return render(request, "authenticate/signin.html", {})
@@ -95,13 +96,10 @@ def signout(request):
     messages.success(request, "Logged Out Successfully!!")
     return render(request, "authenticate/signin.html", {})
 
-@login_required(login_url='signin')
-def index(request):
-    return render(request, "authenticate/index.html", {})
 
 @login_required(login_url='signin')
-
 @accountant_only
 def accountant_index(request):
-    return render(request, "authenticate/a_index.html", {})
+    request.session['accountant']=True
+    return redirect('/details')
 
