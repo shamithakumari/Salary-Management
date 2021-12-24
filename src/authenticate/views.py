@@ -100,6 +100,7 @@ def index(request):
     return render(request, "authenticate/index.html", {})
 
 @login_required(login_url='signin')
+
 @accountant_only
 def accountant_index(request):
     return render(request, "authenticate/a_index.html", {})

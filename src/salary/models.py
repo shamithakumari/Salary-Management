@@ -4,6 +4,8 @@ from django.db.models.fields.related import ForeignKey
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
 
+from authenticate.models import *
+
 # Create your models here.
 class Department(models.Model):
     dno = models.IntegerField(primary_key=True)
@@ -15,27 +17,27 @@ class Department(models.Model):
         return self.dname
 
 class Salary(models.Model):
-    slipno = models.CharField(max_length=10, primary_key=True)
-    eid = models.ForeignKey(User, on_delete=models.CASCADE)
+    slipno = models.AutoField(primary_key=True)
+    eid = models.ForeignKey(Employee, on_delete=models.CASCADE)
     # dno = models.ForeignKey(Department, on_delete=CASCADE)
     
     basic_salary = models.FloatField()
-    hra = models.FloatField()
-    conveyance_allowance = models.FloatField()
-    medical_allowance = models.FloatField()
-    performance_bonus = models.FloatField()
-    others = models.FloatField()
+    hra = models.FloatField(default=0,blank=True,null=True)
+    conveyance_allowance = models.FloatField(default=0,blank=True,null=True)
+    medical_allowance = models.FloatField(default=0,blank=True,null=True)
+    performance_bonus = models.FloatField(default=0,blank=True,null=True)
+    others = models.FloatField(default=0,blank=True,null=True)
     sdate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.slipno
+        return str(self.slipno)
 
 class Deduction(models.Model):
-    dedid = models.CharField(max_length=10, primary_key=True)
-    eid = models.ForeignKey(User, on_delete=models.CASCADE)
+    dedid = models.AutoField(primary_key=True)
+    eid = models.ForeignKey(Employee, on_delete=models.CASCADE)
     slipno = models.ForeignKey(Salary, on_delete=models.CASCADE) 
     dcategory = models.CharField(max_length=30)
-    damt = models.FloatField()
+    damt = models.FloatField(blank=False)
 
     def __str__(self):
-        return self.dedid
+        return str(self.dedid)
