@@ -47,6 +47,7 @@ def accountants(request):
     # context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
     context['employees'] = Employee.objects.all().order_by('userid')
     context['employeeind']=None
+    context['accountant']= request.session.get('accountant')
     return render(request, 'salary/accountants.html',context)
 
 @login_required(login_url='signin')
@@ -111,6 +112,7 @@ def accountants_with_userid(request,userid):
     # context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
     context['employees'] = Employee.objects.all().order_by('userid')
     context['employeeind']= Employee.objects.get(userid=userid)
+    context['accountant']= request.session.get('accountant')
     return render(request, 'salary/accountants.html',context)
 
 def slipcalc_history(slip):
@@ -138,6 +140,7 @@ def history(request):
         context['slips_present']=False
     else:
         context['slips_present']=True
+    context['accountant']= request.session.get('accountant')
     return render(request, 'salary/history.html',context)
 
 
@@ -155,6 +158,7 @@ def history_with_userid(request,userid):
         context['slips_present']=False
     else:
         context['slips_present']=True
+    context['accountant']= request.session.get('accountant')
     return render(request, 'salary/history.html',context)
 
 
