@@ -25,7 +25,7 @@ def details(request):
     total_deductions=0
     net_salary=0
 
-    if salary_list==None:
+    if salary_list:
         total_salary = salary_list.basic_salary + salary_list.hra + salary_list.conveyance_allowance + salary_list.medical_allowance + salary_list.performance_bonus + salary_list.others
         total_deductions = deduction_list[0].damt
         net_salary = total_salary - total_deductions
