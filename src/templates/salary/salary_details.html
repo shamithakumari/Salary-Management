@@ -1,5 +1,7 @@
 {% load static %}
-<!doctype html>
+
+<!DOCTYPE html>
+
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -30,25 +32,17 @@
   <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    <style>
-  @media screen and (max-width: 992px) {
-    table tr {
-        width: 100vw;
-    }
-  }
-    </style>
-
     <title>Employee salary details</title>
   </head>
   <body>
-    <div class="site-mobile-menu site-navbar-target">
+    <!-- <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
           <div class="site-mobile-menu-close mt-3">
             <span class="icon-close2 js-menu-toggle"></span>
           </div>
         </div>
         <div class="site-mobile-menu-body"></div>
-      </div>
+      </div> -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" style="text-transform: uppercase; font-weight: bolder; color: blue;" href="#">E-SALARY</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,7 +119,7 @@
     <div class="limiter">
       <div class="container">
       <div class="heading"> Employee details </div>
-      {% for list in salary_list %}
+      {% comment %} {% for list in salary_list %} {% endcomment %}
        <div class="empid">
          {% for emp in emp_details %}
          <div class="row">
@@ -201,7 +195,7 @@
             </table>
           </div>
         </div>
-        {% endfor %}
+        {% comment %} {% endfor %} {% endcomment %}
         <br>
         <hr class="hr2">
         <br>
@@ -232,10 +226,6 @@
                   <tr>
                     <td class="column1">Deduction amount</td>
                     <td class="column2">{{ list.damt }}</td>
-                  </tr>
-                  <tr>
-                    <td class="column1">Deduction date</td>
-                    <td class="column2">{{ list.ded_date }}</td>
                   </tr>
                   {% endfor %}
               </tbody>
@@ -272,4 +262,6 @@
       })(jQuery);
     </script>
   </body>
+
 </html>
+

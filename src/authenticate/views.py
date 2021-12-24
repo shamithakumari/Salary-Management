@@ -54,7 +54,9 @@ def signup(request):
         # myuser.email = email
         # myuser.is_active = False
         # myuser.is_active = False
-        emp = Employee(myuser)
+        emp= Employee()
+        emp.user=myuser
+        # emp = Employee(myuser)
         emp.userid=eid
         emp.address = address
         emp.phoneno = phone
