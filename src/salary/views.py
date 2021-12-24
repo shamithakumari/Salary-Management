@@ -232,4 +232,7 @@ def salary_slip_update(request,slipno):
         performance_bonus=request.POST['performance_bonus'],
         others=request.POST['others']) 
         return redirect("history")
-        
+
+def salary_slip_delete(request, slipno):
+    Salary.objects.get(pk = slipno).delete()
+    return redirect("history")

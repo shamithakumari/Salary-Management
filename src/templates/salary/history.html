@@ -97,6 +97,7 @@
                             <p>Date: {{slipdict.slip.sdate}}</p>
                         </div>
                         <a href="{% url 'salary_slip_update' slipdict.slip.slipno %}" class="btn btn-primary">Update the Slip#{{slipdict.slip.slipno}}</a>
+                        <a href="{% url 'salary_slip_delete' slipdict.slip.slipno %}" class="btn btn-primary" style="background-color:red;">Delete</a>                   
                     </div>
                 </div>
                 {% comment %} {%endfor%} {% endcomment %}
