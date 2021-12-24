@@ -22,6 +22,7 @@ gobutton.addEventListener("click",()=>{
         deductions.appendChild(deductionclone);
     }
 })
+
 function salaryval(){
     numofdeductions.value=value;
     return true;

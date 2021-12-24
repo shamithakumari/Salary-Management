@@ -8,5 +8,6 @@
 }
 
 .card-text p{
+    color:black !important;
     margin-bottom: 2px!important;
 }
