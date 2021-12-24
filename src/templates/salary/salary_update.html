@@ -27,30 +27,30 @@
         <h5>Salary Slipno: <span>{{currentSalary.slipno}}</span> </h5>
 
          <div class="form_class" >
-    <form  action="/details/accountants" method="post">
+    <form  action="{% url 'salary_slip_update' currentSalary.slipno %}" method="post">
         <div class="form-group">
             <label for="basic_salary">Basic salary</label>
-            <input type="number" class="form-control" id="basic_salary" placeholder="In Rupees" value={{currentSalary.basic_salary}}>
+            <input type="number" name="basic_salary" class="form-control" id="basic_salary" placeholder="In Rupees" value={{currentSalary.basic_salary}}>
         </div>
         <div class="form-group">
             <label for="hra">HRA</label>
-            <input type="number" class="form-control" id="hra" placeholder="In Rupees" value={{currentSalary.hra}}>
+            <input type="number" name="hra" class="form-control" id="hra" placeholder="In Rupees" value={{currentSalary.hra}}>
         </div>
         <div class="form-group">
-            <label for="conveyance _allowance">Coveyance Allowence</label>
-            <input type="number" class="form-control" id="conveyance _allowance " placeholder="In Rupees" value={{currentSalary.conveyance_allowance}}>
+            <label for="conveyance_allowance">Coveyance Allowence</label>
+            <input type="number" name="conveyance_allowance" class="form-control" id="conveyance _allowance " placeholder="In Rupees" value={{currentSalary.conveyance_allowance}}>
         </div>
         <div class="form-group">
             <label for="medical_allowance">Medical Allowance</label>
-            <input type="number" class="form-control" id="medical_allowance" placeholder="In Rupees" value={{currentSalary.medical_allowance}}>
+            <input type="number" name="medical_allowance" class="form-control" id="medical_allowance" placeholder="In Rupees" value={{currentSalary.medical_allowance}}>
         </div>
         <div class="form-group">
             <label for="performance_bonus">Performance Bonus</label>
-            <input type="number" class="form-control" id="performance_bonus" placeholder="In Rupees" value={{currentSalary.performance_bonus}}>
+            <input type="number" name="performance_bonus" class="form-control" id="performance_bonus" placeholder="In Rupees" value={{currentSalary.performance_bonus}}>
         </div>
         <div class="form-group">
             <label for="others">Others</label>
-            <input type="number" class="form-control" id="others" placeholder="In Rupees" value={{currentSalary.performance_bonus}}>
+            <input type="number" name="others" class="form-control" id="others" placeholder="In Rupees" value={{currentSalary.performance_bonus}}>
         </div>
         <div class="form-group">
             <label for="deduction">Deduction</label>

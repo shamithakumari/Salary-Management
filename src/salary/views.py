@@ -216,7 +216,6 @@ def history_with_userid(request,userid):
 @csrf_exempt
 def salary_slip_update(request,slipno):
     if(request.method == 'GET'):
-        print("wooooo")
         salary = Salary.objects.get(pk = slipno)
         deduction = Deduction.objects.filter(slipno = slipno).first()
         print(deduction)
@@ -226,25 +225,11 @@ def salary_slip_update(request,slipno):
         }
         return render(request,'salary/salary_update.html', context)
     else:
-        # context['employeeind']= Employee.objects.get(userid=userid)
-        # context['salary']=Salary.objects.get(pk=slipno)
-        # salary = Salary.objects.get(pk=slipno)
-        # salary.basic_salary = request.POST.get('basic_salary')
-        # salary.hra = request.POST.get('hra')
-        # salary.medical_allowance = request.POST.get('medical_allowance')
-        # salary.performance_bonus = request.POST.get('performance_bonus')
-        # salary.others = request.POST.get('others')
-        # salary.save()
-        # employeeind= Employee.objects.get(userid=userid)
-        # print(employeeind)
         Salary.objects.filter(pk=slipno).update(basic_salary = request.POST['basic_salary'],
         hra=request.POST['hra'],
         conveyance_allowance=request.POST['conveyance_allowance'],
         medical_allowance=request.POST['medical_allowance'],
         performance_bonus=request.POST['performance_bonus'],
         others=request.POST['others']) 
-        return render(request, 'salary/salary_update.html',context)
-        # return HttpResponse("Salary successfully updated")
-    # else:
-    #     return(request,'salary/salary_update.html',context)
-
+        return redirect("history")
+        
