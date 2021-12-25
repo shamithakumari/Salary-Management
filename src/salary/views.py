@@ -22,14 +22,14 @@ def details(request):
     #     deduction_list.append(Deduction.objects.filter(slipno=slip))
     emp_details = User.objects.filter(id=request.user.id)
     emp_details_2 = Employee.objects.get(user=request.user)
-    deduction_list = Deduction.objects.filter(eid=request.user.id)
+    # deduction_list = Deduction.objects.filter(eid=request.user.id)
     salary_list = salary_list.order_by('-sdate').first()
 
     # salary_list is actually a salary slip
     # loop for deductions for that particular salary slip
     # filter returns a list 
     # deduction_list is queryset of deductions on that salary slip
-
+    deduction_list=None
     if salary_list:
         deduction_list=Deduction.objects.filter(slipno=salary_list)
 
@@ -243,11 +243,11 @@ def getSalary(slipno):
 
 def update_salary(request, slipno):
     Salary.objects.filter(pk=slipno).update(basic_salary=request.POST['basic_salary'],
-    hra=request.POST['hra'],
-    conveyance_allowance=request.POST['conveyance_allowance'],
-    medical_allowance=request.POST['medical_allowance'],
-    performance_bonus=request.POST['performance_bonus'],
-    others=request.POST['others'])
+    hra=request.POST['hra'] if request.POST else 0,
+    conveyance_allowance=request.POST.get('conveyance_allowance') if request.POST.get('conveyance_allowance') else 0,
+    medical_allowance=request.POST['medical_allowance'] if request.POST.get('medical_allowance') else 0,
+    performance_bonus=request.POST['performance_bonus'] if request.POST.get('performance_bonus') else 0,
+    others=request.POST['others'] if request.POST.get('others') else 0)
 
 
 def upate_deduction(deduction_categories, deduction_damts, deduction_ids, i):

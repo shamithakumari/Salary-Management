@@ -29,7 +29,7 @@
            <h5>Employee ID:<span>{{employees.0.userid}}</span></h5>
             <h5>Employee Name:  <span>{{employees.0.user.get_full_name}}</span></h5>  {% endcomment %}
        
-           <h5>Employee ID:<span>{{currentSalary.eid.userid}}</span></h5>
+           <h5>Employee ID:  <span>{{currentSalary.eid.userid}}</span></h5>
            <h5>Employee Name:  <span>{{currentSalary.eid.user.get_full_name}}</span></h5>
      
         
@@ -64,7 +64,7 @@
         </div>
         <div class="col-12">
             <label for="others">Others</label>
-            <input type="number" name="others" class="form-control" id="others" placeholder="In Rupees" value={{currentSalary.performance_bonus}}>
+            <input type="number" name="others" class="form-control" id="others" placeholder="In Rupees" value={{currentSalary.others}}>
         </div>
     </div>
     <hr class="div_deduct_line">
