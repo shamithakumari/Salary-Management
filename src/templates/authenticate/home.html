@@ -7,10 +7,12 @@
     <title>Document</title>
 </head>
 <body>
+    {% comment %} {% if user.is_not_authenticated %} {% endcomment %}
     <button type="submit"> <a href="/signup">Signup</a> </button>
     <button type="submit"> <a href="/signin">Login</a> </button>
     <button type="submit"> <a href="/signout">Signout</a> </button>
     <button type="submit"><a href="{% url 'accountants'%}">Accountants</a></button>
     <button type="submit"><a href="{% url 'history'%}">History</a></button>
+    {% comment %} {% endif %} {% endcomment %}
 </body>
 </html>

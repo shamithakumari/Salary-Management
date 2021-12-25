@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
@@ -20,6 +20,7 @@ def home(request):
 def signup(request):
     if request.method == "POST":
         eid = request.POST['eid']
+        # group = request.POST['group']
         fname = request.POST['fname']
         lname = request.POST['lname']
         address = request.POST['address']
@@ -49,6 +50,7 @@ def signup(request):
             return redirect('signup')
         
         myuser = User.objects.create_user(username=eid,first_name=fname,last_name=lname,email=email,password=pass1)
+        # myuser.groups.add(group)
         # myuser.first_name = fname
         # myuser.last_name = lname
         # myuser.email = email
@@ -84,7 +86,10 @@ def signin(request):
             #messages.success(request, "Logged In Sucessfully!!")
             # return render(request, "authenticate/index.html",{"fname":fname})
             # return redirect('details')
-            return accountant_index(request)
+            if user.groups.exists():
+                return accountant_index(request)
+            else:
+                messages.error(request, "Not authorized")
         else:
             messages.error(request, "Invalid login")
             return render(request, "authenticate/signin.html", {})

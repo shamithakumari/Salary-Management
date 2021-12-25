@@ -14,14 +14,24 @@ from .forms import *
 # Create your views here.
 @login_required(login_url='signin')
 def details(request):
-    
+
+    eid=Employee.objects.filter(user=request.user).first()
+    salary_list = Salary.objects.filter(eid=eid)
+
+    # for slip in salary_list:
+    #     deduction_list.append(Deduction.objects.filter(slipno=slip))
     emp_details = User.objects.filter(id=request.user.id)
     emp_details_2 = Employee.objects.get(user=request.user)
-    salary_list = Salary.objects.filter(eid=request.user.id)
     deduction_list = Deduction.objects.filter(eid=request.user.id)
-    # deduction_list = deduction_list.filter(slipno__in=salary_list.slipno)
-    
     salary_list = salary_list.order_by('-sdate').first()
+
+    # salary_list is actually a salary slip
+    # loop for deductions for that particular salary slip
+    # filter returns a list 
+    # deduction_list is queryset of deductions on that salary slip
+
+    if salary_list:
+        deduction_list=Deduction.objects.filter(slipno=salary_list)
 
     total_salary=0
     total_deductions=0
@@ -29,36 +39,44 @@ def details(request):
 
     if salary_list:
         total_salary = salary_list.basic_salary + salary_list.hra + salary_list.conveyance_allowance + salary_list.medical_allowance + salary_list.performance_bonus + salary_list.others
-        total_deductions = deduction_list[0].damt
+        for deduction in deduction_list:
+            total_deductions+=deduction.damt
         net_salary = total_salary - total_deductions
 
-    return render(request, "salary/salary_details.html", 
-    {
+    context = {
         'list':salary_list,
         'ded_list': deduction_list,
         'emp_details': emp_details,
         'emp_details_2': emp_details_2,
+        'total_salary': total_salary,
+        'total_ded': total_deductions,
         'net_salary': net_salary,
         'accountant': request.session.get('accountant')
-    })
+    }
+    return render(request, "salary/salary_details.html", context)
+
 
 @login_required(login_url='signin')
 def accountants(request):
-    context={}
     # context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
-    context['employees'] = Employee.objects.all().order_by('userid')
-    context['employeeind']=None
-    context['accountant']= request.session.get('accountant')
+    employees = Employee.objects.all().order_by('userid')
+    employeeind=None
+    accountant= request.session.get('accountant')
+    context={
+        'employees': employees,
+        'employeeind':employeeind,
+        'accountant':accountant
+    }
     return render(request, 'salary/accountants.html',context)
+
 
 @login_required(login_url='signin')
 def accountants_with_userid(request,userid):
-    context={
-        'errors':[]
-    }
-
+    errors=[]
     salaryForm=SalaryForm()
     deductionForm=DeductionForm()
+    (totsal,totded,netsal)=(0,0,0)
+    success=False
 
     if request.method == 'POST':
         valid=True
@@ -86,34 +104,46 @@ def accountants_with_userid(request,userid):
                     deductionobjs.append(deductionobj)
                     totded+=deductionobj.damt
                 else:
-                    context['errors'].append(deductionForm.errors)
+                    errors.append(deductionForm.errors)
                     # context['errors'].append(deductionForm.non_field_errors)
                     valid=False
             totsal=salaryobj.basic_salary+salaryobj.hra+salaryobj.conveyance_allowance+salaryobj.medical_allowance+salaryobj.performance_bonus+salaryobj.others
-            context['totsal']=totsal
-            context['totded']=totded
-            context['netsal']=totsal-totded
+            totsal=totsal
+            totded=totded
+            netsal=totsal-totded
             if valid and totsal<totded:
-                context['errors'].append("Total salary can't be less than total deductions")
+                errors.append("Total salary can't be less than total deductions")
                 valid=False
             if valid:
                 # print('ded3')
                 salaryobj.save()
                 for deductionobj in deductionobjs:
                     deductionobj.save()
-                context['success']=True
+                success=True
         else:
-            context['errors'].append(salaryForm.errors)
+            errors.append(salaryForm.errors)
 
-    if len(context['errors'])>0:
-        context['iserror']=True
+    iserror =True
+    if len(errors)>0:
+        iserror=True
     else:
-        context['iserror']=False
+        iserror=False
 
     # context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
-    context['employees'] = Employee.objects.all().order_by('userid')
-    context['employeeind']= Employee.objects.get(userid=userid)
-    context['accountant']= request.session.get('accountant')
+    employees = Employee.objects.all().order_by('userid')
+    employeeind= Employee.objects.get(userid=userid)
+    accountant= request.session.get('accountant')
+    context={
+        'errors': errors,
+        'totsal': totsal,
+        'totded': totded,
+        'netsal': netsal,
+        'success': success,
+        'iserror': iserror,
+        'employees': employees,
+        'employeeind': employeeind,
+        'accountant': accountant
+    }
     return render(request, 'salary/accountants.html',context)
 
 def slipcalc_history(slip):
@@ -129,55 +159,87 @@ def slipcalc_history(slip):
 
 @login_required(login_url='signin')
 def history(request):
-    context={}
     # context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
-    context['employees'] = Employee.objects.all().order_by('userid')
-    context['employeeind']=None
-    slips=Salary.objects.filter(eid=context['employees'].first()).order_by('-sdate')
-    context['slips']=[]
-    for slip in slips:
-        context['slips'].append(slipcalc_history(slip))
-    if len(context['slips'])==0:
-        context['slips_present']=False
+    employees = Employee.objects.all().order_by('userid')
+    employeeind=None
+    slip=Salary.objects.filter(eid=employees.first()).order_by('-sdate').first()
+    # context['slips']=[]
+    # for slip in slips:
+    #     context['slips'].append(slipcalc_history(slip))
+    slipdict=None
+    if slip:
+        slipdict=slipcalc_history(slip)
+        if not slipdict:
+            slip_present=False
+        else:
+            slip_present=True
     else:
-        context['slips_present']=True
-    context['accountant']= request.session.get('accountant')
+        slip_present=False
+    accountant= request.session.get('accountant')
+    context={
+        'employees':employees,
+        'employeeind': employeeind,
+        'slipdict': slipdict,
+        'slip_present': slip_present,
+        'accountant': accountant
+    }
     return render(request, 'salary/history.html',context)
 
 
 @login_required(login_url='signin')
 def history_with_userid(request,userid):
-    context={}
     # context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
-    context['employees'] = Employee.objects.all().order_by('userid')
-    context['employeeind']= Employee.objects.get(userid=userid)
-    slips=Salary.objects.filter(eid=context['employeeind']).order_by('-sdate')
-    context['slips']=[]
-    for slip in slips:
-        context['slips'].append(slipcalc_history(slip))
-    if len(context['slips'])==0:
-        context['slips_present']=False
+    employees= Employee.objects.all().order_by('userid')
+    employeeind= Employee.objects.get(userid=userid)
+    slip=Salary.objects.filter(eid=employeeind).order_by('-sdate').first()
+    # context['slips']=[]
+    # for slip in slips:
+    #      context['slips'].append(slipcalc_history(slip))
+    slipdict=None
+    if slip:
+        slipdict=slipcalc_history(slip)
+        if not slipdict:
+            slip_present=False
+        else:
+            slip_present=True
     else:
-        context['slips_present']=True
-    context['accountant']= request.session.get('accountant')
+        slip_present=False
+    accountant= request.session.get('accountant')
+    context={
+        'employees':employees,
+        'employeeind': employeeind,
+        'slipdict': slipdict,
+        'slip_present': slip_present,
+        'accountant': accountant
+    }
     return render(request, 'salary/history.html',context)
 
 
 @csrf_exempt
-def salaryupdate(request,slipno):
-    if(request.method == 'POST'):
-        # salary = Salary.objects.get(pk=slipno)
-        # salary.basic_salary = request.POST.get('basic_salary')
-        # salary.hra = request.POST.get('hra')
-        # salary.medical_allowance = request.POST.get('medical_allowance')
-        # salary.performance_bonus = request.POST.get('performance_bonus')
-        # salary.others = request.POST.get('others')
-        # salary.save()
+def salary_slip_update(request,slipno):
+    if(request.method == 'GET'):
+        salary = Salary.objects.get(pk = slipno)
+        deductions = Deduction.objects.filter(slipno = slipno)
+        context={
+            'currentSalary' :salary,
+            'deductions': deductions
+        }
+        return render(request,'salary/salary_update.html', context)
+    else:
+        print("wooooo")
+        print(request.POST)
+        for deduction in request.POST['deductions']:
+            print(deduction)
+        print(request.POST['deductions'])
+        # print(request.POST['deductions'].split(","))
         Salary.objects.filter(pk=slipno).update(basic_salary = request.POST['basic_salary'],
         hra=request.POST['hra'],
         conveyance_allowance=request.POST['conveyance_allowance'],
         medical_allowance=request.POST['medical_allowance'],
         performance_bonus=request.POST['performance_bonus'],
-        others=request.POST['others'])
-        
-        return HttpResponse("Salary successfully updated")
+        others=request.POST['others']) 
+        return redirect("history")
+
+def salary_slip_delete(request, slipno):
+    Salary.objects.get(pk = slipno).delete()
+    return redirect("history")

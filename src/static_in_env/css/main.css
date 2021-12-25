@@ -249,9 +249,12 @@
     font-size: 20px !important;
     margin-left: 10px;
   }
-  
+
   .total
   {
+    display: flex;
+    flex-direction: column;
+    line-height: 1cm;
     width: 100%;
     background-color: #36304a;
     color: white;
@@ -269,7 +272,7 @@
     }
     table tr {
       width: 100vw;
-  }
+    }
     .row{
       display: flex;
       justify-content: flex-start;

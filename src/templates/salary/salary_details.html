@@ -47,7 +47,7 @@
          {% for emp in emp_details %}
          <div class="row">
           <span class="col-lg-4 col-xs-6">Employee ID</span>
-          <span class="col-lg-6 col-xs-6">{{ list.eid }}</span>
+          <span class="col-lg-6 col-xs-6">{{ emp.username }}</span>
         </div>
          <div class="row">
           <span class="col-lg-4">Name</span>
@@ -66,10 +66,10 @@
           <span class="col-lg-4"> {{ emp_details_2.phoneno }}</span>
          </div>
          {% endfor %}
-         <div class="row">
+         <!-- <div class="row">
           <span class="col-lg-4">Department </span>
           <span class="col-lg-4">{{ list.dno }}</span>
-        </div>
+        </div> -->
         <div class="row">
           <span class="col-lg-4">Slip No </span>
           <span class="col-lg-4">{{ list.slipno }}</span>
@@ -118,6 +118,9 @@
             </table>
           </div>
         </div>
+        <div class="total">
+          <span class="c1">Gross Salary : {{ total_salary }}</span>
+        </div>
         {% comment %} {% endfor %} {% endcomment %}
         <br>
         <hr class="hr2">
@@ -140,11 +143,16 @@
                   </tr>
                   <tr>
                     <td class="column1">Deduction category</td>
-                    {% if list.dcategory == 'L' %}
+
+                    {% comment %} Not required as category is a char field now{% endcomment %}
+
+                    {% comment %} {% if list.dcategory == 'L' %}
                     <td class="column2">Loans</td>
                     {% else %}
                     <td class="column2">Pension</td>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
+
+                    <td class="column2">{{list.dcategory}}</td>
                   </tr>
                   <tr>
                     <td class="column1">Deduction amount</td>
@@ -156,9 +164,10 @@
           </div>
         </div>
       </div>
-      <div class="container">
+      <div class="container totalc">
         <div class="total">
-          Net Salary : {{ net_salary }}
+          <span class="c2">Total Deductions : {{ total_ded }}</span>
+          <span class="c3">Net Salary : {{ net_salary }}</span>
         </div>
       </div>
     </div>
