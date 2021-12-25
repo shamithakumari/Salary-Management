@@ -70,27 +70,18 @@
     <hr class="div_deduct_line">
     <div class= "deduction_part">
         {% for deduction in deductions %}
-        {% comment %} <div class="form-group">
-            <label for="deduction">Deduction Amout</label>
-            <input type="number" name = "deductions[{{forloop.counter}}][damt]"class="form-control" id="damt" placeholder="In Rupees" value={{deduction.damt}}>
-        </div>
         <div class="form-group">
-            <label for="deduction">Deduction Category</label>
-            <input type="text"  name = "deductions[{{forloop.counter}}][category]" class="form-control" id="others" placeholder="Catagory" value={{deduction.dcategory}}>
-        </div> {% endcomment %}
-       
-        <div class="form-group">
-            <input type="hidden" name = "deductions[]"class="form-control" id="id" placeholder="In Rupees" value={{deduction.dedid}}>
+            <input type="hidden" name = "deduction_ids"class="form-control" id="id" placeholder="In Rupees" value={{deduction.dedid}}>
         </div>
         <h5>{{forloop.counter}}:-</h5>
         <div class="row">
         <div class="col-md-6">
             <label for="deduction">Deduction Amout</label>
-            <input type="number" name = "deductions[]"class="form-control" id="damt" placeholder="In Rupees" value={{deduction.damt}}>
+            <input type="number" name = "deduction_damt" class="form-control" id="damt" placeholder="In Rupees" value={{deduction.damt}}>
         </div>
         <div class="col-md-6">
             <label for="deduction">Deduction Category</label>
-            <input type="text"  name = "deductions[]" class="form-control" id="others" placeholder="Catagory" value={{deduction.dcategory}}>
+            <input type="text"  name = "deduction_category" class="form-control" id="others" placeholder="Catagory" value={{deduction.dcategory}}>
         </div>
         </div>
         {% endfor %}

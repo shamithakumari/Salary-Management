@@ -218,7 +218,7 @@ def history_with_userid(request,userid):
 @csrf_exempt
 def salary_slip_update(request,slipno):
     if(request.method == 'GET'):
-        salary = Salary.objects.get(pk = slipno)
+        salary = getSalary(slipno)
         deductions = Deduction.objects.filter(slipno = slipno)
         context={
             'currentSalary' :salary,
@@ -226,20 +226,34 @@ def salary_slip_update(request,slipno):
         }
         return render(request,'salary/salary_update.html', context)
     else:
-        print("wooooo")
-        print(request.POST)
-        for deduction in request.POST['deductions']:
-            print(deduction)
-        print(request.POST['deductions'])
-        # print(request.POST['deductions'].split(","))
-        Salary.objects.filter(pk=slipno).update(basic_salary = request.POST['basic_salary'],
-        hra=request.POST['hra'],
-        conveyance_allowance=request.POST['conveyance_allowance'],
-        medical_allowance=request.POST['medical_allowance'],
-        performance_bonus=request.POST['performance_bonus'],
-        others=request.POST['others']) 
-        return redirect("history")
+        deduction_ids = request.POST.getlist('deduction_ids')
+        deduction_damts = request.POST.getlist('deduction_damt')
+        deduction_categories = request.POST.getlist('deduction_category')
+        salary = getSalary(slipno)
+
+        for i in range(0, len(deduction_ids)):
+            upate_deduction(deduction_categories, deduction_damts, deduction_ids, i)
+        update_salary(request, slipno)
+
+        return redirect("history", salary.eid.userid)
+
+def getSalary(slipno):
+    return Salary.objects.get(pk=slipno)
+
+
+def update_salary(request, slipno):
+    Salary.objects.filter(pk=slipno).update(basic_salary=request.POST['basic_salary'],
+    hra=request.POST['hra'],
+    conveyance_allowance=request.POST['conveyance_allowance'],
+    medical_allowance=request.POST['medical_allowance'],
+    performance_bonus=request.POST['performance_bonus'],
+    others=request.POST['others'])
+
+
+def upate_deduction(deduction_categories, deduction_damts, deduction_ids, i):
+    Deduction.objects.filter(pk=deduction_ids[i]).update(damt=deduction_damts[i], dcategory=deduction_categories[i])
 
 def salary_slip_delete(request, slipno):
+    salary=Salary.objects.get(pk=slipno)
     Salary.objects.get(pk = slipno).delete()
-    return redirect("history")
+    return redirect("history",salary.eid.userid)
