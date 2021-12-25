@@ -163,9 +163,15 @@ def history(request):
     employees = Employee.objects.all().order_by('userid')
     employeeind=None
     slip=Salary.objects.filter(eid=employees.first()).order_by('-sdate').first()
-    # context['slips']=[]
+    # slips=Salary.objects.filter(eid=employees.first()).order_by('-sdate')
+    # slips_list=[]
     # for slip in slips:
-    #     context['slips'].append(slipcalc_history(slip))
+    #     slips_list.append(slipcalc_history(slip))
+    # if len(slips_list)==0:
+    #     slips_present=False
+    # else:
+    #     slips_present=True
+
     slipdict=None
     if slip:
         slipdict=slipcalc_history(slip)
@@ -242,12 +248,19 @@ def getSalary(slipno):
 
 
 def update_salary(request, slipno):
-    Salary.objects.filter(pk=slipno).update(basic_salary=request.POST['basic_salary'],
-    hra=request.POST['hra'] if request.POST else 0,
-    conveyance_allowance=request.POST.get('conveyance_allowance') if request.POST.get('conveyance_allowance') else 0,
-    medical_allowance=request.POST['medical_allowance'] if request.POST.get('medical_allowance') else 0,
-    performance_bonus=request.POST['performance_bonus'] if request.POST.get('performance_bonus') else 0,
-    others=request.POST['others'] if request.POST.get('others') else 0)
+    basic_salary=request.POST['basic_salary']
+    hra=request.POST['hra'] if request.POST else 0
+    conveyance_allowance=request.POST.get('conveyance_allowance') if request.POST.get('conveyance_allowance') else 0
+    medical_allowance=request.POST['medical_allowance'] if request.POST.get('medical_allowance') else 0
+    performance_bonus=request.POST['performance_bonus'] if request.POST.get('performance_bonus') else 0
+    others=request.POST['others'] if request.POST.get('others') else 0
+    Salary.objects.filter(pk=slipno).update(
+        basic_salary=basic_salary,
+        hra=hra,
+        conveyance_allowance=conveyance_allowance,
+        medical_allowance=medical_allowance,
+        performance_bonus=performance_bonus,
+        others=others)
 
 
 def upate_deduction(deduction_categories, deduction_damts, deduction_ids, i):
