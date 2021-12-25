@@ -14,11 +14,13 @@ from .forms import *
 # Create your views here.
 @login_required(login_url='signin')
 def details(request):
-    salary_list = Salary.objects.filter(eid=request.user.id)
-    deduction_list = Deduction.objects.filter(eid=request.user.id)
+    
     emp_details = User.objects.filter(id=request.user.id)
     emp_details_2 = Employee.objects.get(user=request.user)
-
+    salary_list = Salary.objects.filter(eid=request.user.id)
+    deduction_list = Deduction.objects.filter(eid=request.user.id)
+    # deduction_list = deduction_list.filter(slipno__in=salary_list.slipno)
+    
     salary_list = salary_list.order_by('-sdate').first()
 
     total_salary=0
@@ -29,7 +31,6 @@ def details(request):
         total_salary = salary_list.basic_salary + salary_list.hra + salary_list.conveyance_allowance + salary_list.medical_allowance + salary_list.performance_bonus + salary_list.others
         total_deductions = deduction_list[0].damt
         net_salary = total_salary - total_deductions
-
 
     return render(request, "salary/salary_details.html", 
     {
