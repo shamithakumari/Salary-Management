@@ -217,14 +217,19 @@ def history_with_userid(request,userid):
 def salary_slip_update(request,slipno):
     if(request.method == 'GET'):
         salary = Salary.objects.get(pk = slipno)
-        deduction = Deduction.objects.filter(slipno = slipno).first()
-        print(deduction)
+        deductions = Deduction.objects.filter(slipno = slipno)
         context={
             'currentSalary' :salary,
-            'deduction': deduction
+            'deductions': deductions
         }
         return render(request,'salary/salary_update.html', context)
     else:
+        print("wooooo")
+        print(request.POST)
+        for deduction in request.POST['deductions']:
+            print(deduction)
+        print(request.POST['deductions'])
+        # print(request.POST['deductions'].split(","))
         Salary.objects.filter(pk=slipno).update(basic_salary = request.POST['basic_salary'],
         hra=request.POST['hra'],
         conveyance_allowance=request.POST['conveyance_allowance'],

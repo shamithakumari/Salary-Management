@@ -1,9 +1,48 @@
 *{
-    margin: 0;
-    padding: 0;
+    margin:0;
+    padding:0;
     box-sizing: border-box;
 }
-.form_class{
+.container{
     margin-top: 40px;
-    background-color: lightblue;
+   width:67vw;
+}
+.div_line{
+    border:1px solid rgb(160, 160, 160);
+    background-color:rgb(160, 160, 160);
+}
+.col-12{
+    margin-top:5px;
+}
+.col-md-6{
+    margin-top:5px;
+}
+.div_deduct_line{
+    margin-top:30px;
+    margin-bottom:20px;
+    
+    border:1px solid rgb(160, 160, 160);
+    background-color:rgb(160, 160, 160);
+}
+.btn-primary{
+    
+    margin:25px 0 25px 0;
+}
+.employee_details h5{
+    font-size:20px;
+    color:black;
+}
+@media screen and (max-width:580px){
+    .employee_details h5{
+        font-size:15px;
+        color:black;
+    }
+}
+@media screen and (max-width:442px){
+h1{
+    font-size:25px;
+}
+}
+label{
+    color: black;
 }

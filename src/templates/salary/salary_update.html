@@ -1,21 +1,29 @@
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="3.4.1/jquery.min.js"></script>
+<script src="3.4.0/js/bootstrap.min.js"></script>    -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-   
+    <link rel="stylesheet" href="{% static 'css/salary_update.css' %}">
     <title>Salary update</title>
+    {%include 'salary/navbar.html' %}
 </head>
 <body>
-
+    
     <div class="container">
-        <div class="employee_details">
         <h1>Salary Update</h1>
+        <div class="employee_details">
+            <hr class="div_line">
+       
 {% comment %}     
            <h5>Employee ID:<span>{{employees.0.userid}}</span></h5>
             <h5>Employee Name:  <span>{{employees.0.user.get_full_name}}</span></h5>  {% endcomment %}
@@ -23,40 +31,72 @@
            <h5>Employee ID:<span>{{currentSalary.eid.userid}}</span></h5>
            <h5>Employee Name:  <span>{{currentSalary.eid.user.get_full_name}}</span></h5>
      
-        </div>
+        
         <h5>Salary Slipno: <span>{{currentSalary.slipno}}</span> </h5>
-
-         <div class="form_class" >
+       
+    </div>
+    <hr class="div_line">
+         <div class="form_class">
     <form  action="{% url 'salary_slip_update' currentSalary.slipno %}" method="post">
-        <div class="form-group">
+        <div class="row">
+        <div class="col-12">
             <label for="basic_salary">Basic salary</label>
             <input type="number" name="basic_salary" class="form-control" id="basic_salary" placeholder="In Rupees" value={{currentSalary.basic_salary}}>
         </div>
-        <div class="form-group">
+        
+        <div class="col-md-6">
             <label for="hra">HRA</label>
             <input type="number" name="hra" class="form-control" id="hra" placeholder="In Rupees" value={{currentSalary.hra}}>
         </div>
-        <div class="form-group">
+        <div class="col-md-6">
             <label for="conveyance_allowance">Coveyance Allowence</label>
             <input type="number" name="conveyance_allowance" class="form-control" id="conveyance _allowance " placeholder="In Rupees" value={{currentSalary.conveyance_allowance}}>
         </div>
-        <div class="form-group">
+   
+        <div class="col-md-6">
             <label for="medical_allowance">Medical Allowance</label>
             <input type="number" name="medical_allowance" class="form-control" id="medical_allowance" placeholder="In Rupees" value={{currentSalary.medical_allowance}}>
         </div>
-        <div class="form-group">
+        <div class="col-md-6">
             <label for="performance_bonus">Performance Bonus</label>
             <input type="number" name="performance_bonus" class="form-control" id="performance_bonus" placeholder="In Rupees" value={{currentSalary.performance_bonus}}>
         </div>
-        <div class="form-group">
+        <div class="col-12">
             <label for="others">Others</label>
             <input type="number" name="others" class="form-control" id="others" placeholder="In Rupees" value={{currentSalary.performance_bonus}}>
         </div>
-        <div class="form-group">
-            <label for="deduction">Deduction</label>
-            <input type="number" class="form-control" id="others" placeholder="In Rupees" value={{deduction.damt}}>
+    </div>
+    <hr class="div_deduct_line">
+    <div class= "deduction_part">
+        {% for deduction in deductions %}
+        {% comment %} <div class="form-group">
+            <label for="deduction">Deduction Amout</label>
+            <input type="number" name = "deductions[{{forloop.counter}}][damt]"class="form-control" id="damt" placeholder="In Rupees" value={{deduction.damt}}>
         </div>
+        <div class="form-group">
+            <label for="deduction">Deduction Category</label>
+            <input type="text"  name = "deductions[{{forloop.counter}}][category]" class="form-control" id="others" placeholder="Catagory" value={{deduction.dcategory}}>
+        </div> {% endcomment %}
+       
+        <div class="form-group">
+            <input type="hidden" name = "deductions[]"class="form-control" id="id" placeholder="In Rupees" value={{deduction.dedid}}>
+        </div>
+        <h5>{{forloop.counter}}:-</h5>
+        <div class="row">
+        <div class="col-md-6">
+            <label for="deduction">Deduction Amout</label>
+            <input type="number" name = "deductions[]"class="form-control" id="damt" placeholder="In Rupees" value={{deduction.damt}}>
+        </div>
+        <div class="col-md-6">
+            <label for="deduction">Deduction Category</label>
+            <input type="text"  name = "deductions[]" class="form-control" id="others" placeholder="Catagory" value={{deduction.dcategory}}>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% comment %} <div class="text-center"> {% endcomment %}
         <button type="submit" class="btn btn-primary">Update</button>
+        {% comment %} </div> {% endcomment %}
       </form>
     </div> 
       </div>
