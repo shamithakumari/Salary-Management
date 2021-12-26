@@ -1,4 +1,8 @@
 
+.nav-link#viewlnk{
+    color:black;
+}
+
 .list-group .active{
     background-color: black !important;
 }

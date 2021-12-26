@@ -1,4 +1,12 @@
 
+.nav-link#viewlnk{
+    color:rgba(0, 0, 0, 0.50);
+}
+
+.nav-link#historylnk{
+    color:black;
+}
+
 .card{
     margin-top: 20px;
 }
