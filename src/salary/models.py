@@ -34,7 +34,7 @@ class Salary(models.Model):
 
 class Deduction(models.Model):
     dedid = models.AutoField(primary_key=True)
-    eid = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    # eid = models.ForeignKey(Employee, on_delete=models.CASCADE)
     slipno = models.ForeignKey(Salary, on_delete=models.CASCADE) 
     dcategory = models.CharField(max_length=30)
     damt = models.FloatField(blank=False)

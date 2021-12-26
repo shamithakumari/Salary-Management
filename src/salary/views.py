@@ -70,6 +70,7 @@ def accountants(request):
     return render(request, 'salary/accountants.html',context)
 
 
+
 @login_required(login_url='signin')
 def accountants_with_userid(request,userid):
     errors=[]
@@ -99,7 +100,7 @@ def accountants_with_userid(request,userid):
                 if valid and deductionForm.is_valid():
                     # print(f'ded2{i+1}')
                     deductionobj=deductionForm.save(commit=False)
-                    deductionobj.eid=eidobj
+                    # deductionobj.eid=eidobj
                     deductionobj.slipno=salaryobj
                     deductionobjs.append(deductionobj)
                     totded+=deductionobj.damt
@@ -145,6 +146,8 @@ def accountants_with_userid(request,userid):
         'accountant': accountant
     }
     return render(request, 'salary/accountants.html',context)
+
+
 
 def slipcalc_history(slip):
     tot_salary=slip.basic_salary+slip.hra+slip.conveyance_allowance+slip.medical_allowance+slip.performance_bonus+slip.others
