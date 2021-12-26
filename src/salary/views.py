@@ -229,9 +229,11 @@ def salary_slip_update(request,slipno):
     if(request.method == 'GET'):
         salary = getSalary(slipno)
         deductions = Deduction.objects.filter(slipno = slipno)
+        accountant= request.session.get('accountant')
         context={
             'currentSalary' :salary,
-            'deductions': deductions
+            'deductions': deductions,
+            'accountant': accountant
         }
         return render(request,'salary/salary_update.html', context)
     else:
@@ -243,7 +245,7 @@ def salary_slip_update(request,slipno):
         for i in range(0, len(deduction_ids)):
             upate_deduction(deduction_categories, deduction_damts, deduction_ids, i)
         update_salary(request, slipno)
-
+        
         return redirect("history", salary.eid.userid)
 
 def getSalary(slipno):
@@ -272,4 +274,5 @@ def upate_deduction(deduction_categories, deduction_damts, deduction_ids, i):
 def salary_slip_delete(request, slipno):
     salary=Salary.objects.get(pk=slipno)
     Salary.objects.get(pk = slipno).delete()
+    
     return redirect("history",salary.eid.userid)
