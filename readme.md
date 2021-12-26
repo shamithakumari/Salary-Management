@@ -4,7 +4,7 @@
 
 ## Software used:
 
-Frontend - `HTML, CSS, JavaScript, Bootstrap`
+Frontend - `HTML`, `CSS`, `JavaScript`, `Bootstrap`
 
 Backend - `Django(3.2.9)`
 
