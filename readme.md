@@ -4,13 +4,13 @@
 
 ## Software used:
 
-Frontend - HTML, CSS, JavaScript, Bootstrap
+Frontend - `HTML, CSS, JavaScript, Bootstrap`
 
-Backend - Django(3.2.9)
+Backend - `Django(3.2.9)`
 
-Text Editor - VSCode (1.63.2)
+Text Editor - `VSCode (1.63.2)`
 
->**Please check requirements.txt for more information**
+>**Please check `requirements.txt` for more information**
 
 In order to run the project, you need to first set up a virtual environment. 
 
