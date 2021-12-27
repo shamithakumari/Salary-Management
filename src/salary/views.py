@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 
 from authenticate.models import Employee
 # import salary
-from .models import Salary, Deduction
+from .models import Salary, Deduction, Latest
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -120,6 +120,13 @@ def accountants_with_userid(request,userid):
                 salaryobj.save()
                 for deductionobj in deductionobjs:
                     deductionobj.save()
+                latestslip=Latest.objects.get(eid=eidobj)
+                if latestslip:
+                    Latest.objects.filter(pk=eidobj).update(slipno=salaryobj)
+                else:
+                    latestslip.eid=eidobj
+                    latestslip.slipno=salaryobj
+                    latestslip.save()
                 success=True
         else:
             errors.append(salaryForm.errors)
@@ -165,31 +172,43 @@ def history(request):
     # context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
     employees = Employee.objects.all().order_by('userid')
     employeeind=None
-    slip=Salary.objects.filter(eid=employees.first()).order_by('-sdate').first()
-    # slips=Salary.objects.filter(eid=employees.first()).order_by('-sdate')
-    # slips_list=[]
-    # for slip in slips:
-    #     slips_list.append(slipcalc_history(slip))
-    # if len(slips_list)==0:
-    #     slips_present=False
-    # else:
-    #     slips_present=True
 
-    slipdict=None
-    if slip:
-        slipdict=slipcalc_history(slip)
-        if not slipdict:
-            slip_present=False
-        else:
-            slip_present=True
+    latestslipentry=Latest.objects.filter(eid=employees.first()).first()
+    latestslip=True
+    if latestslipentry:
+        latestslip=Salary.objects.filter(slipno=latestslipentry.slipno.slipno).first()
+    # slip=Salary.objects.filter(eid=employees.first()).order_by('-sdate').first()
+    slips=Salary.objects.filter(eid=employees.first()).order_by('-sdate')
+
+    islatest=False
+    if latestslip and slips:
+        if latestslip==slips.first():
+            islatest=True
+    # print(slips)
+    slips_list=[]
+    for slip in slips:
+        slips_list.append(slipcalc_history(slip))
+    if len(slips_list)==0:
+        slips_present=False
     else:
-        slip_present=False
+        slips_present=True
+
+    # slipdict=None
+    # if slip:
+    #     slipdict=slipcalc_history(slip)
+    #     if not slipdict:
+    #         slip_present=False
+    #     else:
+    #         slip_present=True
+    # else:
+    #     slip_present=False
     accountant= request.session.get('accountant')
     context={
         'employees':employees,
         'employeeind': employeeind,
-        'slipdict': slipdict,
-        'slip_present': slip_present,
+        'slips': slips_list,
+        'slips_present': slips_present,
+        'latestslip':islatest,
         'accountant': accountant
     }
     return render(request, 'salary/history.html',context)
@@ -200,25 +219,35 @@ def history_with_userid(request,userid):
     # context['employees'] = Employee.objects.all().order_by('user__first_name','user__last_name')
     employees= Employee.objects.all().order_by('userid')
     employeeind= Employee.objects.get(userid=userid)
-    slip=Salary.objects.filter(eid=employeeind).order_by('-sdate').first()
-    # context['slips']=[]
-    # for slip in slips:
-    #      context['slips'].append(slipcalc_history(slip))
-    slipdict=None
-    if slip:
-        slipdict=slipcalc_history(slip)
-        if not slipdict:
-            slip_present=False
-        else:
-            slip_present=True
+
+    latestslipentry=Latest.objects.filter(eid=employeeind).first()
+    latestslip=True
+    if latestslipentry:
+        latestslip=Salary.objects.filter(slipno=latestslipentry.slipno.slipno).first()
+    # slip=Salary.objects.filter(eid=employees.first()).order_by('-sdate').first()
+    slips=Salary.objects.filter(eid=employeeind).order_by('-sdate')
+
+    islatest=False
+    if latestslip and slips:
+        if latestslip==slips.first():
+            islatest=True
+    # print(latestslip)
+    # print(slips)
+    slips_list=[]
+    for slip in slips:
+        slips_list.append(slipcalc_history(slip))
+    if len(slips_list)==0:
+        slips_present=False
     else:
-        slip_present=False
+        slips_present=True
+
     accountant= request.session.get('accountant')
     context={
         'employees':employees,
         'employeeind': employeeind,
-        'slipdict': slipdict,
-        'slip_present': slip_present,
+        'slips': slips_list,
+        'slips_present': slips_present,
+        'latestslip':islatest,
         'accountant': accountant
     }
     return render(request, 'salary/history.html',context)

@@ -41,3 +41,10 @@ class Deduction(models.Model):
 
     def __str__(self):
         return str(self.dedid)
+
+class Latest(models.Model):
+    eid = models.OneToOneField(Employee, on_delete=models.CASCADE,primary_key=True)
+    slipno = models.OneToOneField(Salary, on_delete=models.CASCADE) 
+
+    def __str__(self):
+        return str(self.eid.userid)+" Latest slip: "+str(self.slipno)

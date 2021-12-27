@@ -81,14 +81,15 @@
                 </div>
                 <hr>
                 
-            {%if not slip_present %}
+            {%if not slips_present %}
                 <h2>Slips are yet to be inserted for this employee</h2>
             {%else%}
-                
+            <script> var index=0; </script>
+              {% for slipdict in slips %}  
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="{{slipdict.slip.slipno}}">
                         <h5 class="card-title">Slip no: {{slipdict.slip.slipno}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">(to see the contents, click on the update button)</h6>
+                        {% comment %} <h6 class="card-subtitle mb-2 text-muted">(to see the contents, click on the update button)</h6> {% endcomment %}
                         <div class="card-text">
                             <p>Basic Salary: {{slipdict.slip.basic_salary}}</p>
                             <p>Gross Salary: {{slipdict.tot_salary}}</p>
@@ -97,11 +98,20 @@
                             <p>Net Salary: {{slipdict.net_salary}}</p>
                             <p>Date: {{slipdict.slip.sdate}}</p>
                         </div>
-                        <a href="{% url 'salary_slip_update' slipdict.slip.slipno %}" class="btn btn-primary">Update the Slip#{{slipdict.slip.slipno}}</a>
+                        <script>
+                        {%if latestslip%}
+                            if (index==0)
+                            {
+                            var cardbody=document.getElementById("{{slipdict.slip.slipno}}");
+                            cardbody.innerHTML+="<a href=\"{% url 'salary_slip_update' slipdict.slip.slipno %}\" class=\"btn btn-primary\">Update the Slip#{{slipdict.slip.slipno}}</a>";
+                            }
+                            index++;
+                        {%endif%}
+                        </script>
                         <a href="{% url 'salary_slip_delete' slipdict.slip.slipno %}" class="btn btn-primary" style="background-color:red;">Delete</a>                   
                     </div>
                 </div>
-                {% comment %} {%endfor%} {% endcomment %}
+                {%endfor%}
             {%endif%}
 
             </div>
