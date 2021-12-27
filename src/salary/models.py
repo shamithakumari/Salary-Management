@@ -7,14 +7,14 @@ from django.db.models.deletion import CASCADE
 from authenticate.models import *
 
 # Create your models here.
-class Department(models.Model):
-    dno = models.IntegerField(primary_key=True)
-    dname = models.CharField(max_length=20)
-    mgrid = models.ForeignKey(User,on_delete=CASCADE)
-    dept_date = models.DateField()
+# class Department(models.Model):
+#     dno = models.IntegerField(primary_key=True)
+#     dname = models.CharField(max_length=20)
+#     mgrid = models.ForeignKey(User,on_delete=CASCADE)
+#     dept_date = models.DateField()
     
-    def __str__(self):
-        return self.dname
+#     def __str__(self):
+#         return self.dname
 
 class Salary(models.Model):
     slipno = models.AutoField(primary_key=True)

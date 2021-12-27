@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 
 from authenticate.models import Employee
 # import salary
-from .models import Salary,Department, Deduction
+from .models import Salary, Deduction
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -224,7 +224,7 @@ def history_with_userid(request,userid):
     return render(request, 'salary/history.html',context)
 
 
-@csrf_exempt
+# @csrf_exempt
 def salary_slip_update(request,slipno):
     if(request.method == 'GET'):
         salary = getSalary(slipno)
@@ -243,7 +243,7 @@ def salary_slip_update(request,slipno):
         salary = getSalary(slipno)
 
         for i in range(0, len(deduction_ids)):
-            upate_deduction(deduction_categories, deduction_damts, deduction_ids, i)
+            update_deduction(deduction_categories, deduction_damts, deduction_ids, i)
         update_salary(request, slipno)
         
         return redirect("history", salary.eid.userid)
@@ -268,7 +268,7 @@ def update_salary(request, slipno):
         others=others)
 
 
-def upate_deduction(deduction_categories, deduction_damts, deduction_ids, i):
+def update_deduction(deduction_categories, deduction_damts, deduction_ids, i):
     Deduction.objects.filter(pk=deduction_ids[i]).update(damt=deduction_damts[i], dcategory=deduction_categories[i])
 
 def salary_slip_delete(request, slipno):

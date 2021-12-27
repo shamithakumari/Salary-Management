@@ -79,7 +79,7 @@ def signin(request):
         # print('User request')
         
         if user is not None:
-            print('User request2')
+            # print('User request2')
             login(request, user)
             fname = user.first_name
             # lname = user.last_name

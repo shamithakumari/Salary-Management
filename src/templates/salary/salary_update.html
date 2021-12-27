@@ -39,6 +39,7 @@
     <hr class="div_line">
          <div class="form_class">
     <form  action="{% url 'salary_slip_update' currentSalary.slipno %}" method="post">
+        {% csrf_token %}
         <div class="row">
         <div class="col-12">
             <label for="basic_salary">Basic salary</label>
