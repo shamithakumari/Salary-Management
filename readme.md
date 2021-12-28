@@ -19,6 +19,11 @@ In order to run the project, you need to first set up a virtual environment.
 pip3 install virtualenv 
 ```   
 
+**Setting up virtual environment:-**
+```
+virtualenv env
+```
+
 **To activate virtual environment:-** 
 
 **On Windows:**
